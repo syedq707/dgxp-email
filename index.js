@@ -49,7 +49,7 @@ app.post("/subscribe", async (req, res) => {
 
   var mailOptions = {
     from: userEmail,
-    to: userEmail,
+    to: "zarir.destinyawaits@gmail.com",
     subject: "DGXP Website:: New Email droppeed for Demo",
     text:
       `Customer Email: 
