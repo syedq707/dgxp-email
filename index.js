@@ -59,10 +59,14 @@ app.post("/subscribe", async (req, res) => {
   try {
     await transporter.sendMail(mailOptions);
     console.log("Email sent succesfully!");
-    res.send("Subscribed!");
+    res.send({ data: "Subscribed!" });
   } catch (err) {
     console.log("Error while sending email: ", err);
   }
+});
+
+app.options("/contact", function (req, res) {
+  res.sendStatus(200);
 });
 
 app.post("/contact", async (req, res) => {
@@ -91,7 +95,7 @@ app.post("/contact", async (req, res) => {
   try {
     await transporter.sendMail(mailOptions);
     console.log("Email sent succesfully!");
-    res.send("Contact Form Submitted!");
+    res.send({ data: "Contact Form Submitted!" });
   } catch (err) {
     console.log("Error while sending email: ", err);
   }
