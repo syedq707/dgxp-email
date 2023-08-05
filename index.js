@@ -38,6 +38,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+/* ------------For DigitalGxP------------ */
 // Preflight request
 app.options("/subscribe", function (req, res) {
   res.sendStatus(200);
@@ -65,6 +66,7 @@ app.post("/subscribe", async (req, res) => {
   }
 });
 
+// Preflight request
 app.options("/contact", function (req, res) {
   res.sendStatus(200);
 });
@@ -96,6 +98,43 @@ app.post("/contact", async (req, res) => {
     await transporter.sendMail(mailOptions);
     console.log("Email sent succesfully!");
     res.send({ data: "Contact Form Submitted!" });
+  } catch (err) {
+    console.log("Error while sending email: ", err);
+  }
+});
+
+/* ------------For RBot------------ */
+// Preflight request
+app.options("/contact", function (req, res) {
+  res.sendStatus(200);
+});
+
+app.post("/rbot/book-a-call", async (req, res) => {
+  const { restaurantName, email, phone } = req.body;
+  console.log("Request params: ", req.body);
+
+  var mailOptions = {
+    from: userEmail,
+    to: "zarir.destinyawaits@gmail.com, syedw.minds@gmail.com",
+    subject: "RBOT Website:: New Book A Call Request",
+    text:
+      `Restaurant Name: 
+        ` +
+      restaurantName +
+      `\n\nCustomer Email: 
+        ` +
+      email +
+      `\n\nCustomer Phone Number: 
+        ` +
+      phone,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Rbot book a call!");
+    res.send({
+      data: "Your booking request has been submitted. We will contact you soon to schedule a call.",
+    });
   } catch (err) {
     console.log("Error while sending email: ", err);
   }
