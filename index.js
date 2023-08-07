@@ -19,17 +19,7 @@ app.use(express.json());
 
 var allowedOrigins = ["https://digitalgxp.com/", "https://rbot.space/"];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
+app.use(cors());
 
 // app.use(function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
@@ -155,6 +145,8 @@ app.post("/rbot/book-a-call", async (req, res) => {
     console.log("Error while sending email: ", err);
   }
 });
+
+app.use(cors());
 
 app.listen(port, () => {
   console.log("Email server listening at http://localhost:" + port);
