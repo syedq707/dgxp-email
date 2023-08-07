@@ -21,15 +21,6 @@ var allowedOrigins = ["https://digitalgxp.com/", "https://rbot.space/"];
 
 app.use(cors());
 
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
-
 app.get("/", (req, res) => {
   res.send("Incorrect Endpoint.");
 });
@@ -121,7 +112,7 @@ app.post("/rbot/book-a-call", async (req, res) => {
 
   var mailOptions = {
     from: userEmail,
-    to: "zarir.destinyawaits@gmail.com, syedw.minds@gmail.com",
+    to: "zarir.destinyawaits@gmail.com, syedq.minds@gmail.com",
     subject: "RBOT Website:: New Book A Call Request",
     text:
       `Restaurant Name: 
