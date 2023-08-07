@@ -17,16 +17,19 @@ app.use(express.json());
 
 // Set up the CORS middleware
 
-var whitelist = ["https://digitalgxp.com/", "https://rbot.space/"];
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
+var allowedOrigins = ["https://digitalgxp.com/", "https://rbot.space/"];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 // app.use(function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
@@ -37,7 +40,7 @@ var corsOptions = {
 //   next();
 // });
 
-app.get("/", cors(corsOptions), (req, res) => {
+app.get("/", (req, res) => {
   res.send("Incorrect Endpoint.");
 });
 
@@ -53,11 +56,11 @@ const transporter = nodemailer.createTransport({
 
 /* ------------For DigitalGxP------------ */
 // Preflight request
-app.options("/subscribe", cors(corsOptions), function (req, res) {
+app.options("/subscribe", function (req, res) {
   res.sendStatus(200);
 });
 
-app.post("/subscribe", cors(corsOptions), async (req, res) => {
+app.post("/subscribe", async (req, res) => {
   const email = req.body.email;
   console.log("Request param: ", req.body);
 
@@ -80,11 +83,11 @@ app.post("/subscribe", cors(corsOptions), async (req, res) => {
 });
 
 // Preflight request
-app.options("/contact", cors(corsOptions), function (req, res) {
+app.options("/contact", function (req, res) {
   res.sendStatus(200);
 });
 
-app.post("/contact", cors(corsOptions), async (req, res) => {
+app.post("/contact", async (req, res) => {
   const { name, email, phone, message } = req.body;
   console.log("Request params: ", req.body);
 
@@ -118,11 +121,11 @@ app.post("/contact", cors(corsOptions), async (req, res) => {
 
 /* ------------For RBot------------ */
 // Preflight request
-app.options("/contact", cors(corsOptions), function (req, res) {
+app.options("/contact", function (req, res) {
   res.sendStatus(200);
 });
 
-app.post("/rbot/book-a-call", cors(corsOptions), async (req, res) => {
+app.post("/rbot/book-a-call", async (req, res) => {
   const { restaurantName, email, phone } = req.body;
   console.log("Request params: ", req.body);
 
